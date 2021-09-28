@@ -54,7 +54,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// Não cheque essas requisições
-		httpSecurity.authorizeRequests().antMatchers("/", "/authenticate","/h2/**", "swagger-ui.html").permitAll().
+		httpSecurity.authorizeRequests().antMatchers("/", 
+				"/authenticate",
+				"/h2/**", 
+				"/swagger-ui.html",
+				"/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/webjars/**").permitAll().
 		// Qualquer outra requisição deve ser checada
 		anyRequest().authenticated().and().
 		exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

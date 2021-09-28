@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.mercadofacil.DTO.ClienteDTO;
@@ -13,6 +15,9 @@ import com.ufcg.psoft.mercadofacil.repository.ClienteRepository;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	 
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
@@ -41,8 +46,11 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	public Cliente criaCliente(ClienteDTO clienteDTO) {
+			
+		String password = bCryptPasswordEncoder.encode(clienteDTO.getPassword());
+		
 		Cliente cliente = new Cliente(clienteDTO.getCPF(), clienteDTO.getNome(), 
-				clienteDTO.getIdade(), clienteDTO.getEndereco(), clienteDTO.getPassword());
+				clienteDTO.getIdade(), clienteDTO.getEndereco(), password);
 		
 		return cliente;
 	}
