@@ -16,7 +16,7 @@ import com.ufcg.psoft.mercadofacil.repository.ClienteRepository;
 public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 	 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -47,7 +47,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	public Cliente criaCliente(ClienteDTO clienteDTO) {
 			
-		String password = bCryptPasswordEncoder.encode(clienteDTO.getPassword());
+		String password = passwordEncoder.encode(clienteDTO.getPassword());
 		
 		Cliente cliente = new Cliente(clienteDTO.getCPF(), clienteDTO.getNome(), 
 				clienteDTO.getIdade(), clienteDTO.getEndereco(), password);
